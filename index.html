@@ -1,0 +1,551 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#030816">
+  <title>College Tech Fest 2026</title>
+
+  <style>
+    :root {
+      --bg: #0a2f40;
+      --blue: #136984;
+      --cyan: #264c55;
+      --text: #f4f9ff;
+      --muted: #a9c0dd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .scene {
+      position: relative;
+      isolation: isolate;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 28px 20px;
+      text-align: center;
+      background:
+        radial-gradient(
+          ellipse at 50% 105%,
+          #07518b 0%,
+          #09284c 24%,
+          #061329 53%,
+          var(--bg) 80%
+        );
+    }
+
+    /* Animated stars */
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(
+          1px 1px at 20px 30px,
+          white 99%, transparent
+        ),
+        radial-gradient(
+          2px 2px at 90px 110px,
+          #8bdfff 99%, transparent
+        ),
+        radial-gradient(
+          1px 1px at 180px 60px,
+          white 99%, transparent
+        );
+      background-size: 210px 190px;
+      animation: starsMove 15s linear infinite;
+      opacity: .65;
+      z-index: -1;
+    }
+
+    .stars::before,
+    .stars::after {
+      content: "";
+      inset: -100%;
+      background-size: 290px 260px;
+      animation-duration: 24s;
+      opacity: .45;
+    }
+
+    .stars::after {
+      animation-duration: 35s;
+      background-position: 70px 130px;
+    }
+
+    @keyframes starsMove {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(190px);
+      }
+    }
+
+    /* Background orbit */
+    .orbit {
+      position: absolute;
+      width: min(80vw, 600px);
+      aspect-ratio: 1;
+      border: 1px solid #46baff15;
+      border-radius: 50%;
+      box-shadow: 0 0 80px #168bff0c;
+      pointer-events: none;
+    }
+
+    /* Rocket positioning and launch */
+    .rocket {
+      position: absolute;
+      left: 50%;
+      bottom: -240px;
+      z-index: 3;
+      width: 110px;
+      height: 220px;
+      transform: translateX(-50%);
+      animation: rocketLaunch
+        6s cubic-bezier(.35, .05, .7, .3) forwards;
+      will-change: bottom, transform;
+      filter: drop-shadow(0 0 14px #32baff88);
+    }
+
+    .rocket-body {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    @keyframes rocketLaunch {
+      0% {
+        bottom: -240px;
+        transform: translateX(-50%) rotate(-4deg);
+      }
+
+      12% {
+        bottom: 5%;
+        transform: translateX(-50%) rotate(0deg);
+      }
+
+      35% {
+        transform: translateX(-45%) rotate(2deg);
+      }
+
+      100% {
+        bottom: 125%;
+        transform: translateX(-35%) rotate(7deg);
+      }
+    }
+
+    /* Main event text */
+    .content {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 760px);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: reveal 1.1s ease 1.9s forwards;
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .34em;
+      line-height: 1.8;
+    }
+
+    h1 {
+      margin: 20px 0 14px;
+      font-size: clamp(34px, 8vw, 76px);
+      line-height: 1.05;
+      letter-spacing: -.04em;
+      text-wrap: balance;
+    }
+
+    h1 span {
+      display: block;
+      margin-top: 9px;
+      color: var(--blue);
+      text-shadow: 0 0 28px #159dff66;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: clamp(14px, 2.8vw, 18px);
+      line-height: 1.8;
+      letter-spacing: .04em;
+    }
+
+    /* Registration button */
+    .register {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      margin-top: 25px;
+      padding: 15px 25px;
+      border: 1px solid #b0edff;
+      border-radius: 7px;
+      background: linear-gradient(
+        110deg, #a4edff, #38baff
+      );
+      color: #03101f;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-decoration: none;
+      box-shadow: 0 0 30px #169dff45;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .register:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 42px #169dff80;
+    }
+
+    .status {
+      min-height: 24px;
+      margin-top: 20px;
+      color: #a8c9e8;
+      font-size: 13px;
+    }
+
+    /* Skip intro link */
+    .skip {
+      position: fixed;
+      z-index: 5;
+      top: 20px;
+      right: 20px;
+      color: #d8eaff;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 10px 12px;
+      border: 1px solid #8dbfff35;
+      border-radius: 6px;
+      background: #08162b99;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      left: 12px;
+      right: 12px;
+      z-index: 2;
+      color: #829cba;
+      font-size: 10px;
+      letter-spacing: .18em;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      .scene {
+        padding: 24px 17px;
+      }
+
+      .eyebrow {
+        letter-spacing: .2em;
+      }
+
+      .skip {
+        top: 12px;
+        right: 12px;
+      }
+
+      .register {
+        width: min(100%, 310px);
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .stars,
+      .stars::before,
+      .stars::after,
+      .rocket,
+      .content {
+        animation: none !important;
+      }
+
+      .rocket {
+        display: none;
+      }
+
+      .content {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="scene">
+    <div class="stars" aria-hidden="true"></div>
+    <div class="orbit" aria-hidden="true"></div>
+
+    <!-- Realistic vector rocket -->
+    <div class="rocket" aria-hidden="true">
+      <svg
+        class="rocket-body"
+        viewBox="0 0 120 220"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient
+            id="hull" x1="0" y1="0" x2="1" y2="0"
+          >
+            <stop offset="0" stop-color="#627d9d"/>
+            <stop offset=".28" stop-color="#f5fbff"/>
+            <stop offset=".58" stop-color="#a8c5e1"/>
+            <stop offset="1" stop-color="#354f70"/>
+          </linearGradient>
+
+          <linearGradient
+            id="fire" x1="0" y1="0" x2="0" y2="1"
+          >
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset=".25" stop-color="#8df4ff"/>
+            <stop offset=".65" stop-color="#258dff"/>
+            <stop offset="1" stop-color="#174bff"
+                    stop-opacity="0"/>
+          </linearGradient>
+
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="5"/>
+          </filter>
+        </defs>
+
+        <!-- Engine glow -->
+        <path
+          d="M43 151 L60 215 L77 151 Z"
+          fill="#168bff"
+          opacity=".8"
+          filter="url(#glow)"
+        />
+
+        <!-- Main blue-white flame -->
+        <path
+          d="M48 148 Q49 174 60 202
+             Q72 175 72 148 Z"
+          fill="url(#fire)"
+        />
+
+        <path
+          d="M56 151 Q57 169 60 181
+             Q64 166 64 151 Z"
+          fill="#ffffff"
+        />
+
+        <!-- Rocket fins -->
+        <path
+          d="M43 126 L17 166 L43 157 Z"
+          fill="#d93e58"
+          stroke="#ff9eaa"
+          stroke-width="2"
+        />
+
+        <path
+          d="M77 126 L103 166 L77 157 Z"
+          fill="#9c2442"
+          stroke="#f36b83"
+          stroke-width="2"
+        />
+
+        <!-- Main metallic hull -->
+        <path
+          d="M60 12
+             C46 30 34 53 34 86
+             L34 145
+             Q60 158 86 145
+             L86 86
+             C86 53 74 30 60 12 Z"
+          fill="url(#hull)"
+          stroke="#d5edff"
+          stroke-width="2"
+        />
+
+        <!-- Red nose cone -->
+        <path
+          d="M60 12
+             C50 27 43 39 39 52
+             Q60 62 81 52
+             C77 39 70 27 60 12 Z"
+          fill="#e84a62"
+          stroke="#ffb3c0"
+          stroke-width="1.5"
+        />
+
+        <!-- Hull panel details -->
+        <path
+          d="M39 57 Q60 64 81 57"
+          fill="none"
+          stroke="#527493"
+          stroke-width="2"
+        />
+
+        <path
+          d="M38 121 L82 121"
+          stroke="#5e7896"
+          stroke-width="2"
+        />
+
+        <!-- Circular cockpit window -->
+        <circle
+          cx="60" cy="87" r="16"
+          fill="#183d65"
+          stroke="#f3fbff"
+          stroke-width="4"
+        />
+
+        <circle
+          cx="60" cy="87" r="11"
+          fill="#27c7ff"
+          stroke="#70e8ff"
+          stroke-width="2"
+        />
+
+        <path
+          d="M53 81 Q60 75 66 82"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
+
+        <!-- Engine nozzle -->
+        <path
+          d="M45 144 L47 157 L73 157 L75 144"
+          fill="#263c55"
+          stroke="#b4d6ef"
+          stroke-width="2"
+        />
+
+        <path
+          d="M49 151 L71 151"
+          stroke="#6cdfff"
+          stroke-width="3"
+        />
+      </svg>
+    </div>
+
+    <a class="skip" id="skip" href="#">
+      Skip intro ↗
+    </a>
+
+    <section class="content">
+      <div class="eyebrow">
+        THE FUTURE STARTS HERE
+      </div>
+
+      <h1>
+        COLLEGE
+        <span>TECH FEST 2026</span>
+      </h1>
+
+      <div class="tagline">
+        INNOVATE. CREATE. ORGANIZE.<br>
+        One idea can launch the future.
+      </div>
+
+      <a class="register" id="register" href="#">
+        REGISTER NOW <span aria-hidden="true">↗</span>
+      </a>
+
+      <div
+        class="status"
+        id="status"
+        role="status"
+        aria-live="polite"
+      >
+        Initializing launch sequence...
+      </div>
+    </section>
+
+    <div class="footer">
+      DREAM BIG · BUILD THE FUTURE
+    </div>
+  </main>
+
+  <script>
+    // Paste your actual Google Form respondent link below.
+    const FORM_URL =
+      "https://docs.google.com/forms/d/e/1FAIpQLSepdYE2PJ7pBnRtISapYovW-8rSY0iETGC6Rm_RO0wiE4k5kg/viewform?usp=publish-editor";
+
+    // Time before automatic redirection.
+    const INTRO_SECONDS = 7;
+
+    const register = document.getElementById("register");
+    const skip = document.getElementById("skip");
+    const status = document.getElementById("status");
+
+    const validForm =
+      /^https:\/\/docs\.google\.com\/forms\/d\/e\/[^/]+\/(viewform|viewanalytics)(?:[?#].*)?$/.test(FORM_URL) ||
+      /^https:\/\/docs\.google\.com\/forms\/d\/[^/]+\/viewform(?:[?#].*)?$/.test(FORM_URL);
+
+    if (!validForm) {
+      status.textContent =
+        "Setup needed: add your Google Form link.";
+
+      function showSetupMessage(event) {
+        event.preventDefault();
+        status.textContent =
+          "Replace FORM_URL with your real Google Form link.";
+      }
+
+      register.href = "#";
+      skip.href = "#";
+      register.addEventListener("click", showSetupMessage);
+      skip.addEventListener("click", showSetupMessage);
+    } else {
+      register.href = FORM_URL;
+      skip.href = FORM_URL;
+
+      let seconds = INTRO_SECONDS;
+
+      status.textContent = "Launch in " + seconds + "...";
+
+      const timer = setInterval(() => {
+        seconds--;
+
+        if (seconds > 0) {
+          status.textContent =
+            "Registration opens in " + seconds + "...";
+        } else {
+          clearInterval(timer);
+          status.textContent =
+            "Liftoff! Opening registration...";
+
+          window.location.replace(FORM_URL);
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
